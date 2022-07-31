@@ -1,7 +1,12 @@
-# Impostor
+# impostor
 
-Finds Tor relays not linked to a `MyFamily` fingerprint, but using the same
-nicknames or contact information.
+Find Tor relays imitating your own relays.
+
+Invalid relays must:
+
+- Not be linked to a given `MyFamily` fingerprint.
+- Use a given `ContactInfo` or `Nickname`.
+- Be running.
 
 ## Usage
 

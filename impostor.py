@@ -19,8 +19,14 @@ METRICS_URL = 'https://metrics.torproject.org/rs.html#details/'
               help='Find relays with this string in the Nickname.',
               multiple=True)
 def main(myfamily, contact, nickname):
-    """Finds Tor relays not linked to the MYFAMILY fingerprint, but using the
-    same nicknames or contact information.
+    """Find Tor relays imitating your own relays.
+
+    Invalid relays must:
+
+    \b
+    - Not be linked to a given MyFamily fingerprint.
+    - Use a given ContactInfo or Nickname.
+    - Be running.
     """
     valid_fingerprints = get_effective_family(myfamily)
 
@@ -35,6 +41,7 @@ def main(myfamily, contact, nickname):
 
     invalid_fingerprints = found_fingerprints - valid_fingerprints
     invalid_relays = [found_relays[fp] for fp in invalid_fingerprints]
+    invalid_relays = [r for r in invalid_relays if r['running']]
 
     if invalid_relays:
         click.echo('Impostors found:')
